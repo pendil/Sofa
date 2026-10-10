@@ -139,7 +139,66 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:2.3rem;line-
 @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 label.l{display:block;font-size:.86rem;font-weight:500;color:var(--soft);margin:18px 0 8px}
 
+/* чекбокс "Увидимся в школе" */
+.school-check{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  border:1.5px solid rgba(232,196,188,.8);
+  border-radius:14px;
+  background:#fffcf9;
+  cursor:pointer;
+  font-size:.95rem;
+  font-weight:500;
+  color:var(--deep);
+  transition:background .2s,border-color .2s,box-shadow .2s;
+  margin-bottom:18px;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.school-check:hover{background:var(--blush);border-color:var(--rose)}
+.school-check input{
+  position:absolute;
+  opacity:0;
+  width:0;height:0;
+  pointer-events:none;
+}
+.school-check-box{
+  width:22px;height:22px;
+  border:1.5px solid rgba(201,123,123,.55);
+  border-radius:6px;
+  background:#fffcf9;
+  display:grid;place-items:center;
+  flex-shrink:0;
+  transition:background .2s,border-color .2s,transform .15s;
+}
+.school-check-box::after{
+  content:'';
+  width:11px;height:6px;
+  border-left:2px solid #fff;
+  border-bottom:2px solid #fff;
+  transform:rotate(-45deg) translateY(-2px);
+  opacity:0;
+  transition:opacity .15s;
+}
+.school-check input:checked + .school-check-box{
+  background:linear-gradient(135deg,#c97b7b,#a85c5c);
+  border-color:transparent;
+}
+.school-check input:checked + .school-check-box::after{opacity:1}
+.school-check input:focus-visible + .school-check-box{
+  outline:2px solid var(--deep);
+  outline-offset:3px;
+}
+.school-check input:checked ~ .school-check-text{
+  color:var(--deep);
+  font-weight:500;
+}
+.school-check-text{transition:color .2s}
+
 /* ====== КАЛЕНДАРЬ ====== */
+#calendar-wrap{display:block}
 .calendar{
   background:#fffcf9;
   border:1.5px solid rgba(232,196,188,.8);
@@ -413,36 +472,46 @@ label.l{display:block;font-size:.86rem;font-weight:500;color:var(--soft);margin:
         </div>
         <form id="meet" novalidate>
 
-          <label class="l">Выбери день:</label>
-          <div class="calendar">
-            <div class="cal-head">
-              <button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button>
-              <div class="cal-title" id="cal-title">—</div>
-              <button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button>
-            </div>
-            <div class="cal-weekdays" aria-hidden="true">
-              <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
-            </div>
-            <div class="cal-grid" id="cal-grid" role="grid" aria-label="Календарь"></div>
-          </div>
+          <label class="school-check">
+            <input type="checkbox" id="school-check">
+            <span class="school-check-box" aria-hidden="true"></span>
+            <span class="school-check-text">Увидимся в школе</span>
+          </label>
 
-          <div id="time-block">
-            <label class="l">Во сколько?</label>
-            <div class="times" id="times">
-              <button type="button" class="tslot" data-time="10:00">10:00</button>
-              <button type="button" class="tslot" data-time="12:00">12:00</button>
-              <button type="button" class="tslot" data-time="14:00">14:00</button>
-              <button type="button" class="tslot" data-time="16:00">16:00</button>
-              <button type="button" class="tslot" data-time="18:00">18:00</button>
-              <button type="button" class="tslot" data-time="20:00">20:00</button>
-              <input type="time" class="custom-time" id="custom-time" aria-label="Своё время">
+          <div id="calendar-wrap">
+            <label class="l">Выбери день:</label>
+            <div class="calendar">
+              <div class="cal-head">
+                <button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button>
+                <div class="cal-title" id="cal-title">—</div>
+                <button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button>
+              </div>
+              <div class="cal-weekdays" aria-hidden="true">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+              </div>
+              <div class="cal-grid" id="cal-grid" role="grid" aria-label="Календарь"></div>
+            </div>
+
+            <div id="time-block">
+              <label class="l">Во сколько?</label>
+              <div class="times" id="times">
+                <button type="button" class="tslot" data-time="10:00">10:00</button>
+                <button type="button" class="tslot" data-time="12:00">12:00</button>
+                <button type="button" class="tslot" data-time="14:00">14:00</button>
+                <button type="button" class="tslot" data-time="16:00">16:00</button>
+                <button type="button" class="tslot" data-time="18:00">18:00</button>
+                <button type="button" class="tslot" data-time="20:00">20:00</button>
+                <input type="time" class="custom-time" id="custom-time" aria-label="Своё время">
+              </div>
             </div>
           </div>
 
           <div class="summary" id="summary" aria-live="polite"></div>
 
-          <label class="l" for="place">Где?</label>
-          <input class="field" id="place" name="place" type="text" placeholder="Любое место, где тебе спокойно">
+          <div id="place-wrap">
+            <label class="l" for="place">Где?</label>
+            <input class="field" id="place" name="place" type="text" placeholder="Любое место, где тебе спокойно">
+          </div>
 
           <label class="l" for="msg">Что-то ещё? (необязательно)</label>
           <textarea class="field" id="msg" name="message" rows="3" placeholder="Всё, что хочешь мне сказать"></textarea>
@@ -728,26 +797,30 @@ function watch(){
 }
 
 /* ============================================================
-   КАЛЕНДАРЬ + ВРЕМЯ
+   КАЛЕНДАРЬ + ВРЕМЯ + ЧЕКБОКС "В ШКОЛЕ"
    ============================================================ */
 (function(){
   var MONTHS_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
   var MONTHS_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 
-  var calTitle  = document.getElementById('cal-title');
-  var calGrid   = document.getElementById('cal-grid');
-  var prevBtn   = document.getElementById('cal-prev');
-  var nextBtn   = document.getElementById('cal-next');
-  var timeBlock = document.getElementById('time-block');
-  var summary   = document.getElementById('summary');
-  var customTime= document.getElementById('custom-time');
-  var errBox    = document.getElementById('err');
+  var calTitle   = document.getElementById('cal-title');
+  var calGrid    = document.getElementById('cal-grid');
+  var prevBtn    = document.getElementById('cal-prev');
+  var nextBtn    = document.getElementById('cal-next');
+  var timeBlock  = document.getElementById('time-block');
+  var summary    = document.getElementById('summary');
+  var customTime = document.getElementById('custom-time');
+  var errBox     = document.getElementById('err');
+  var schoolChk  = document.getElementById('school-check');
+  var calWrap    = document.getElementById('calendar-wrap');
+  var placeWrap  = document.getElementById('place-wrap');
 
   var today = new Date();
   today.setHours(0,0,0,0);
 
   var view = { y: today.getFullYear(), m: today.getMonth() };
   var selected = { date: null, time: null };
+  var schoolMode = false;
 
   function fmtDate(d){
     var s = d.getDate() + ' ' + MONTHS_GEN[d.getMonth()];
@@ -851,8 +924,35 @@ function watch(){
     updateSummary();
   });
 
+  /* --- чекбокс "Увидимся в школе" --- */
+  schoolChk.addEventListener('change', function(){
+    schoolMode = schoolChk.checked;
+
+    if(schoolMode){
+      // Сбрасываем выбранную дату и время
+      selected.date = null;
+      selected.time = null;
+      customTime.value = '';
+      var slots = document.querySelectorAll('.tslot');
+      for(var k=0;k<slots.length;k++) slots[k].classList.remove('is-selected');
+      if(errBox) errBox.style.display = 'none';
+
+      // Прячем календарь и поле "Где?"
+      calWrap.style.display = 'none';
+      placeWrap.style.display = 'none';
+      timeBlock.classList.remove('show');
+    } else {
+      calWrap.style.display = '';
+      placeWrap.style.display = '';
+    }
+    updateSummary();
+  });
+
   function updateSummary(){
-    if(selected.date && selected.time){
+    if(schoolMode){
+      summary.innerHTML = 'Увидимся <b>в школе</b>';
+      summary.classList.add('show');
+    } else if(selected.date && selected.time){
       summary.innerHTML = 'Жду тебя <b>' + fmtDate(selected.date) + ', ' + selected.time + '</b>';
       summary.classList.add('show');
     } else if(selected.date){
@@ -864,6 +964,7 @@ function watch(){
   }
 
   window.__calGetValue = function(){
+    if(schoolMode) return 'В школе';
     if(!selected.date || !selected.time) return null;
     return fmtDate(selected.date) + ', ' + selected.time;
   };
@@ -903,7 +1004,7 @@ document.getElementById('meet').addEventListener('submit', function(e){
   var f = e.target;
   var dt = window.__calGetValue();
   if(!dt){
-    err.textContent = 'Выбери день и время, пожалуйста.';
+    err.textContent = 'Выбери день и время или отметь «Увидимся в школе».';
     err.style.display = 'block';
     return;
   }
