@@ -406,11 +406,10 @@ label.l{display:block;font-size:.86rem;font-weight:500;color:var(--soft);margin:
 
     <section class="reply reveal" id="reply">
       <div id="choose">
-        <h2>Как тебе будет удобно?</h2>
-        <p class="note">Выбирай то, что ближе. Любой ответ придёт прямо ко мне.</p>
+        <h2>Увидимся?</h2>
+        <p class="note">Если захочешь — выбери день и время, когда тебе удобно. Ответ придёт прямо ко мне.</p>
         <div class="choices">
-          <button class="btn main" id="b-write">Спишемся</button>
-          <button class="btn alt" id="b-meet">Увидимся</button>
+          <button class="btn main" id="b-meet">Выбрать день</button>
         </div>
         <form id="meet" novalidate>
 
@@ -893,10 +892,7 @@ function done(t){
   th.innerHTML = t;
   th.classList.add('show');
 }
-var bw = document.getElementById('b-write');
-bw.onclick = function(){
-  send({choice:'Спишемся'}, 'Спасибо, что ответила.<br>Буду ждать твоего сообщения.', bw);
-};
+
 document.getElementById('b-meet').onclick = function(){
   document.querySelector('.choices').style.display = 'none';
   document.getElementById('meet').classList.add('show');
